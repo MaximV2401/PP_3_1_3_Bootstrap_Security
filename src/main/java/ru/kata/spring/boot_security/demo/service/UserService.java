@@ -25,8 +25,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+
 
     private final PasswordEncoder bcryptPasswordEncoder;
 
@@ -88,7 +87,8 @@ public class UserService implements UserDetailsService {
 //        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
 //
 //        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-//                user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),  authorities);
+//                user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(),
+//                user.isAccountNonLocked(),  authorities);
     }
     private List<GrantedAuthority> getUserAuthority(List<Role> userRoles) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
