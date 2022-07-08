@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.*;
@@ -22,7 +23,10 @@ import java.util.*;
 public class UserService implements UserDetailsService {
 
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     private final PasswordEncoder bcryptPasswordEncoder;
 
@@ -44,7 +48,7 @@ public class UserService implements UserDetailsService {
 //    }
 
     public Boolean saveUser(User user) {
-        User userFromDb = userRepository.findByName(user.getUsername());
+        User userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb != null) {
             return false;
         }
@@ -74,11 +78,17 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username);
-        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),  authorities);
+        return user;
+
+//        List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+//
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+//                user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),  authorities);
     }
     private List<GrantedAuthority> getUserAuthority(List<Role> userRoles) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();

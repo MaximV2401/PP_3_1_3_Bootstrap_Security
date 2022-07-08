@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll();
+
     }
 
     // аутентификация inMemory
@@ -60,8 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new InMemoryUserDetailsManager(user);
 //    }
 
-
-
+//    @Autowired
+//    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//    }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
