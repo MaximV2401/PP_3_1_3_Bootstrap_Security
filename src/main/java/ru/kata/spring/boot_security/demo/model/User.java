@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.Set;
 
 
 @Data
@@ -44,11 +44,11 @@ public class User implements UserDetails {
            inverseJoinColumns =  @JoinColumn(name = "role_id"))
    private List<Role> roles;
 
-   public User(String firstName, String password, List<SimpleGrantedAuthority> authorities) {
-      this.firstName = firstName;
-      this.password = password;
-      this.authorities = authorities;
-   }
+//   public User(String firstName, String password, List<SimpleGrantedAuthority> authorities) {
+//      this.firstName = firstName;
+//      this.password = password;
+//      this.authorities = authorities;
+//   }
 
    public User() {
 

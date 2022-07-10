@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -20,6 +21,7 @@ import java.util.*;
 
 
 @Service
+
 public class UserService implements UserDetailsService {
 
 
@@ -90,13 +92,13 @@ public class UserService implements UserDetailsService {
 //                user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(),
 //                user.isAccountNonLocked(),  authorities);
     }
-    private List<GrantedAuthority> getUserAuthority(List<Role> userRoles) {
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-        for (Role role : userRoles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return grantedAuthorities;
-    }
+//    private List<GrantedAuthority> getUserAuthority(List<Role> userRoles) {
+//        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+//        for (Role role : userRoles) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+//        }
+//        return grantedAuthorities;
+//    }
 //    public static UserDetails fromUser(User user, List<GrantedAuthority> authorities) {
 //        return new org.springframework.security.core.userdetails.User(user.getUsername(),
 //                user.getPassword(), true, true, true, true,  authorities);
