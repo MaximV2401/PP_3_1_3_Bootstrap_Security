@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -16,27 +18,34 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 
 
 @Service
+
 public class UserService implements UserDetailsService {
 
 
     private final UserRepository userRepository;
 
+    public final RoleRepository roleRepository;
 
 
-    private final PasswordEncoder bcryptPasswordEncoder;
+    private final PasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder bcryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
-        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
+        this.roleRepository = roleRepository;
     }
 
-
+    @Transactional
     public List<User> listUsers() {
         return userRepository.findAll();
     }
@@ -45,7 +54,7 @@ public class UserService implements UserDetailsService {
 //    public void add(User user) {
 //        userRepository.save(user);
 //    }
-
+    @Transactional
     public Boolean saveUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb != null) {
@@ -58,12 +67,17 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-
+    @Transactional
+    public void saveRole(Role role) {
+        entityManager.persist(role);
+    }
     public User getUser(long id) {
         return userRepository.getById(id);
     }
 
-
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
     public void delete(long id) {
         userRepository.deleteById(id);
@@ -90,13 +104,13 @@ public class UserService implements UserDetailsService {
 //                user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(),
 //                user.isAccountNonLocked(),  authorities);
     }
-    private List<GrantedAuthority> getUserAuthority(List<Role> userRoles) {
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-        for (Role role : userRoles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return grantedAuthorities;
-    }
+//    private List<GrantedAuthority> getUserAuthority(List<Role> userRoles) {
+//        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+//        for (Role role : userRoles) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+//        }
+//        return grantedAuthorities;
+//    }
 //    public static UserDetails fromUser(User user, List<GrantedAuthority> authorities) {
 //        return new org.springframework.security.core.userdetails.User(user.getUsername(),
 //                user.getPassword(), true, true, true, true,  authorities);

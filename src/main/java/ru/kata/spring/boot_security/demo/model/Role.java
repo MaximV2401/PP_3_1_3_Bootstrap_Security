@@ -3,8 +3,8 @@ package ru.kata.spring.boot_security.demo.model;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,22 +20,26 @@ public class Role implements GrantedAuthority {
     @Column(name = "name")
     String name;
 
-    @ManyToMany (targetEntity = User.class, mappedBy = "roles",  fetch = FetchType.LAZY)
-    private List<User> users;
+    @ManyToMany (mappedBy = "roles",  fetch = FetchType.LAZY)
+    private List<User> users = new ArrayList<>();
 
     public Role() {
 
     }
+    public Role(Long id) {
+        this.id = id;
+    }
 
+    public Role(String name){
+        this.name = name;
+    }
 
     @Override
     public String getAuthority() {
         return getName();
     }
 
-    public Role(Long id) {
-        this.id = id;
-    }
+
 
     public Role(Long id, String name) {
         this.id = id;

@@ -11,7 +11,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Data
@@ -36,18 +37,18 @@ public class User implements UserDetails {
    @Column(name = "password")
    private String password;
 
-   @Transient
-   private List<SimpleGrantedAuthority> authorities;
+//   @Transient
+//   private List<SimpleGrantedAuthority> authorities;
 
-   @ManyToMany (targetEntity = Role.class, fetch = FetchType.LAZY)
+   @ManyToMany (fetch = FetchType.EAGER)
    @JoinTable(name = "user_roles", joinColumns =  @JoinColumn(name = "user_id"),
            inverseJoinColumns =  @JoinColumn(name = "role_id"))
-   private List<Role> roles;
+   private List<Role> roles = new ArrayList<Role>();
 
-   public User(String firstName, String password, List<SimpleGrantedAuthority> authorities) {
+   public User(String firstName, String password, List<Role> roles) {
       this.firstName = firstName;
       this.password = password;
-      this.authorities = authorities;
+      this.roles = roles;
    }
 
    public User() {
@@ -57,7 +58,13 @@ public class User implements UserDetails {
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
 
-      return getRoles();
+      return roles.stream()
+              .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+              .collect(Collectors.toList());
+   }
+
+   public void addRole(Role role) {
+      roles.add(role);
    }
 
    @Override
