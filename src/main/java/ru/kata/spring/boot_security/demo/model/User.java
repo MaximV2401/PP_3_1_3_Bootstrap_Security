@@ -25,10 +25,10 @@ public class User implements UserDetails {
    private Long id;
 
 
-   @Column(name = "firstName")
-   private String firstName;
+   @Column(name = "username")
+   private String username;
 
-   @Column(name = "lastName")
+   @Column(name = "last_name")
    private String lastName;
 
    @Column(name = "email")
@@ -37,16 +37,15 @@ public class User implements UserDetails {
    @Column(name = "password")
    private String password;
 
-//   @Transient
-//   private List<SimpleGrantedAuthority> authorities;
 
    @ManyToMany (fetch = FetchType.EAGER)
    @JoinTable(name = "user_roles", joinColumns =  @JoinColumn(name = "user_id"),
            inverseJoinColumns =  @JoinColumn(name = "role_id"))
+
    private List<Role> roles = new ArrayList<Role>();
 
-   public User(String firstName, String password, List<Role> roles) {
-      this.firstName = firstName;
+   public User(String username, String password, List<Role> roles) {
+      this.username= username;
       this.password = password;
       this.roles = roles;
    }
@@ -74,7 +73,7 @@ public class User implements UserDetails {
 
    @Override
    public String getUsername() {
-      return firstName;
+      return username;
    }
 
    @Override
