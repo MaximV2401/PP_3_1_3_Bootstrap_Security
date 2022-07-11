@@ -21,15 +21,15 @@ public class AdminController {
 
     @GetMapping()
     public String getUsers(Model model) {
-        model.addAttribute("list", userService.listUsers());
+        model.addAttribute("users", userService.listUsers());
         return "admin";
     }
 
-    @GetMapping("/{id}")
-    public String getById(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        return "user";
-    }
+//    @GetMapping("/{id}")
+//    public String getById(@PathVariable("id") long id, Model model) {
+//        model.addAttribute("user", userService.getUser(id));
+//        return "user";
+//    }
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
@@ -38,25 +38,26 @@ public class AdminController {
 
 
 
-    @PostMapping()
+    @PostMapping( "/new")
     public String userCreate(@ModelAttribute("user") User user) {
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/{id}/edit")
+
+    @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") long id) {
         model.addAttribute("user", userService.getUser(id));
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/edit/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
         userService.update(user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.delete(id);
         return "redirect:/admin";
