@@ -68,19 +68,21 @@ public class UserService implements UserDetailsService {
     public void saveRole(Role role) {
         entityManager.persist(role);
     }
+
+    @Transactional
     public User getUser(long id) {
         return userRepository.getById(id);
     }
-
+    @Transactional
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
+    @Transactional
     public void delete(long id) {
         userRepository.deleteById(id);
     }
 
-
+    @Transactional
     public void update(User user) {
         userRepository.save(user);
     }
