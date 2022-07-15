@@ -26,9 +26,9 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public final RoleRepository roleRepository;
 
-    @Autowired
+
+
     private final BCryptPasswordEncoder bcryptPasswordEncoder;
 
     @PersistenceContext
@@ -36,9 +36,9 @@ public class UserService implements UserDetailsService {
 
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bcryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bcryptPasswordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
     }
 
