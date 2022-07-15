@@ -62,6 +62,15 @@ public class User implements UserDetails {
               .collect(Collectors.toList());
    }
 
+   public String getRolesAsString() {
+      StringBuilder sb = new StringBuilder();
+      for (Role role : roles) {
+         sb.append(role.toString().substring(5));
+         sb.append(" ");
+      }
+      return sb.toString();
+   }
+
    public void addRole(Role role) {
       roles.add(role);
    }
