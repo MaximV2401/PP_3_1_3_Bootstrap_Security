@@ -92,79 +92,8 @@
                                                         th:data-target="${'#edit' + user.getId()}">Edit
                                                 </button>
 
+
 <!--                                                        модальное окно edit-->
-
-                                                <!--EDIT-->
-                                                <div class="modal fade" th:each="user : ${users}"
-                                                     th:attr="id=${'editModal' + user.id}" tabindex="-1">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content font-weight-bold">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="editModalLabel">Edit user</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <form th:method="PATCH" th:action="@{admin/edit/{id}(id=${user.id})}" th:object="${user}">
-                                                                <div class="row justify-content-center">
-                                                                    <div class="col-6 fw-bolder">
-                                                                        <div class="modal-body text-center">
-
-                                                                            <div class="form-group">
-                                                                                <label for="id">ID</label>
-                                                                                <input type="text" disabled class="form-control" id="id"
-                                                                                       th:value="${user.id}" name="id">
-                                                                            </div>
-                                                                            <br>
-                                                                            <div class="form-group">
-                                                                                <label for="editFirstname">First name</label>
-                                                                                <input type="text" id="editFirstname" th:value="${user.username}"
-                                                                                       name="username"/>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="editLastname">Last name</label>
-                                                                                <input type="text" id="editLastname" th:value="${user.lastName}"
-                                                                                       name="lastName"/>
-                                                                            </div>
-<!--                                                                            <div class="form-group">-->
-<!--                                                                                <label for="editAge">Age</label>-->
-<!--                                                                                <input type="number" min = "0" id="editAge" th:value="${user.age}" name="age"/>-->
-<!--                                                                            </div>-->
-<!--                                                                            <div class="form-group">-->
-<!--                                                                                <label for="editUsername">Email</label>-->
-<!--                                                                                <input type="email" id="editUsername" th:value="${user.username}"-->
-<!--                                                                                       name="username" required/>-->
-<!--                                                                            </div>-->
-                                                                            <div class="form-group">
-                                                                                <label for="editPassword">Password</label>
-                                                                                <input type="text" id="editPassword" th:value="${user.password}"
-                                                                                       name="password" required/>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="font-weight-bold" for="editRoles">Role</label>
-                                                                                <select multiple class="form-control" id="editRoles" name="roles"
-                                                                                        size="2" required>
-                                                                                    <option th:each="role: ${listRoles}"
-                                                                                            th:text="${role.name}" th:value="${role.id}"
-                                                                                            th:selected="${user.getRoles().contains(role)}"></option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary"
-                                                                                        data-dismiss="modal">
-                                                                                    Close
-                                                                                </button>
-                                                                                <button type="submit" class="btn btn-primary">Edit</button>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
 
 <!--                                                <div class="modal" th:id="${'edit' + user.getId()}">-->
 <!--                                                    <div class="modal-dialog">-->
