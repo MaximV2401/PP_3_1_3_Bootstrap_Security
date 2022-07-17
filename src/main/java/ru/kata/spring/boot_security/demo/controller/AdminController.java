@@ -40,16 +40,17 @@ public class AdminController {
 //        model.addAttribute("user", userService.getUser(id));
 //        return "user";
 //    }
-    @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        return "new";
-    }
+//    @GetMapping("/new")
+//    public String newUser(Model model) {
+//        model.addAttribute("user", new User());
+//        return "new";
+//    }
 
 
 
     @PostMapping( "/new")
-    public String userCreate(@ModelAttribute("user") User user) {
+    public String userCreate(@ModelAttribute("user") User user, @RequestParam(value = "nameRoles", required = false) String roles) {
+        user.setRoles(roleService.getByName(roles));
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -62,7 +63,9 @@ public class AdminController {
     }
 
     @PatchMapping ("/edit/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id,
+                         @RequestParam(value = "nameRoles", required = false) String roles) {
+        user.setRoles(roleService.getByName(roles));
         userService.update(user);
         return "redirect:/admin";
     }

@@ -88,8 +88,8 @@
 <!--                                    Edit User-->
                                             <td>
                                                 <button type="button" class="btn btn-info"
-                                                        data-bs-toggle="modal"
-                                                        th:data-bs-target="${'#edit' + user.id}">Edit
+                                                        data-toggle="modal"
+                                                        th:data-target="${'#edit' + user.id}">Edit
                                                 </button>
 
 
@@ -174,11 +174,10 @@
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
                                                         th:data-target="${'#delete' + user.id}">Delete
                                                 </button>
+
+
+
                                                 <!--Модальное окно-->
-
-
-
-
 
                                                 <div class="modal" th:id="${'delete' + user.id}">
                                                     <div class="modal-dialog">
@@ -282,7 +281,7 @@
                                                 <strong><label for="aEmail">Email</label></strong>
                                                 <br/>
                                                 <input type="text" class="form-control" th:field="*{email}" id="aEmail"
-                                                   placeholder="email" required minlength="1" maxlength="2">
+                                                   placeholder="email" required minlength="1" maxlength="20">
 
 
                                                 <strong><label for="aPassword">Password</label></strong>
