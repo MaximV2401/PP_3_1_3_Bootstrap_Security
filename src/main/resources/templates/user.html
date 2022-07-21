@@ -30,6 +30,11 @@
         <div class="col-lg-2 bg-white min-vh-100">
             <ul class="nav nav-pills flex-column">
                 <br/>
+                <div sec:authorize="${hasRole('ADMIN')}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link active" th:href="@{/user}">User</a>
                 </li>
